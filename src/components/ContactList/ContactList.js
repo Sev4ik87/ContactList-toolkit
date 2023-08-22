@@ -2,23 +2,20 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactItem from '../ContactItem/ContactItem';
 import './ContactList.css';
-import API from '../../contact-service';
 import {
   addNewContact,
   selectContact,
-  getContacts,
-  selectContacts,
+  getContactsAsync,
   deleteContactAsync, 
 } from '../../store/slices/contactSlice';
 
 function ContactList() {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
+  const contacts = useSelector(state => state.contact.contacts);
+  
 
   useEffect(() => {
-    API.get('/')
-      .then(({ data }) => dispatch(getContacts(data)))
-      .catch(({ statusText }) => console.log({ statusText }));
+    dispatch(getContactsAsync()); 
   }, [dispatch]);
 
   function onAddNewContact() {
@@ -26,6 +23,7 @@ function ContactList() {
   }
 
   function onDeleteContact(id) {
+
     dispatch(deleteContactAsync(id)); 
   }
 

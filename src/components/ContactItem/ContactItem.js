@@ -2,15 +2,11 @@ import React from 'react';
 import './ContactItem.css';
 import { useDispatch } from 'react-redux';
 import { deleteContactAsync, selectContact } from '../../store/slices/contactSlice';
-import API from '../../contact-service';
 
 function ContactItem({ contact }) {
   const dispatch = useDispatch();
 
   const onItemDelete = () => {
-    API.delete(`/${contact.id}`)
-      .then(({ status }) => console.log(status))
-      .catch((error) => console.error(error));
     dispatch(deleteContactAsync(contact.id));
   };
 

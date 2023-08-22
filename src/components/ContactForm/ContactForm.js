@@ -4,13 +4,14 @@ import {
   createContactAsync,
   updateContactAsync,
   deleteContactAsync,
-  selectContactForEdit,
+  
 } from '../../store/slices/contactSlice';
 import './ContactForm.css';
 
 function ContactForm() {
-  const contactForEdit = useSelector(selectContactForEdit);
   const dispatch = useDispatch();
+  const contactForEdit = useSelector((state) => state.contact.contactForEdit); 
+
   const [editContact, setEditContact] = useState(contactForEdit);
 
   useEffect(() => {
