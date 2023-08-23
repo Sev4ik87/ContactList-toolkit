@@ -11,48 +11,48 @@ const initialState = {
 
 export const createContactAsync = createAsyncThunk(
   `${CONTACT_SLICE_NAME}/createContact`,
-  async (contactData) => {
+  async (contactData, { rejectWithValue }) => {
     try {
       const response = await API.post('/', contactData);
       return response.data;
     } catch (error) {
-      throw error;
+      return rejectWithValue(error.message); 
     }
   }
 );
 
 export const updateContactAsync = createAsyncThunk(
   `${CONTACT_SLICE_NAME}/updateContact`,
-  async (contactData) => {
+  async (contactData, { rejectWithValue }) => {
     try {
       const response = await API.put(`/${contactData.id}`, contactData);
       return response.data;
     } catch (error) {
-      throw error;
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const deleteContactAsync = createAsyncThunk(
   `${CONTACT_SLICE_NAME}/deleteContact`,
-  async (id) => {
+  async (contactId, { rejectWithValue }) => {
     try {
-      await API.delete(`/${id}`);
-      return id;
+      await API.delete(`/${contactId}`);
+      return contactId;
     } catch (error) {
-      throw error;
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const getContactsAsync = createAsyncThunk(
   `${CONTACT_SLICE_NAME}/getContacts`,
-  async () => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await API.get('/');
       return response.data;
     } catch (error) {
-      throw error;
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -78,10 +78,11 @@ export const contactSlice = createSlice({
         state.contacts.push(action.payload);
         state.contactForEdit = createEmptyContact();
         state.isFetching = false;
+        state.error = null; 
       })
       .addCase(createContactAsync.rejected, (state, action) => {
         state.isFetching = false;
-        state.error = action.error.message;
+        state.error = action.payload; 
       })
       .addCase(updateContactAsync.pending, (state) => {
         state.isFetching = true;
@@ -93,25 +94,27 @@ export const contactSlice = createSlice({
         );
         state.contactForEdit = createEmptyContact();
         state.isFetching = false;
+        state.error = null;
       })
       .addCase(updateContactAsync.rejected, (state, action) => {
         state.isFetching = false;
-        state.error = action.error.message;
+        state.error = action.payload;
       })
       .addCase(deleteContactAsync.pending, (state) => {
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(deleteContactAsync.fulfilled, (state, {payload}) => {
+      .addCase(deleteContactAsync.fulfilled, (state, { payload }) => {
         state.contacts = state.contacts.filter(
           (contact) => contact.id !== payload
         );
         state.contactForEdit = createEmptyContact();
         state.isFetching = false;
+        state.error = null;
       })
       .addCase(deleteContactAsync.rejected, (state, action) => {
         state.isFetching = false;
-        state.error = action.error.message;
+        state.error = action.payload;
       })
       .addCase(getContactsAsync.pending, (state) => {
         state.isFetching = true;
@@ -120,10 +123,11 @@ export const contactSlice = createSlice({
       .addCase(getContactsAsync.fulfilled, (state, action) => {
         state.contacts = action.payload;
         state.isFetching = false;
+        state.error = null;
       })
       .addCase(getContactsAsync.rejected, (state, action) => {
         state.isFetching = false;
-        state.error = action.error.message;
+        state.error = action.payload;
       });
   },
 });

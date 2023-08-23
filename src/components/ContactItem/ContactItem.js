@@ -16,7 +16,7 @@ function ContactItem({ contact }) {
   };
 
   return (
-    <div className='contact-item' onClick={onContactEdit}>
+    <div className='contact-item' >
       <p className='content' onDoubleClick={onContactEdit}>
         {contact.firstName} {contact.lastName}
       </p>
