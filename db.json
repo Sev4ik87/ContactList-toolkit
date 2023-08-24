@@ -1,3 +1,11 @@
 {
-  "contact": []
+  "contact": [
+    {
+      "firstName": "Sevalopjk",
+      "lastName": "Braverman",
+      "email": "se8@gmail.com",
+      "phone": "0985455578",
+      "id": 1
+    }
+  ]
 }

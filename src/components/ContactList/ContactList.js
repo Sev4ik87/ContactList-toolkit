@@ -4,9 +4,7 @@ import ContactItem from '../ContactItem/ContactItem';
 import './ContactList.css';
 import {
   addNewContact,
-  selectContact,
   getContactsAsync,
-  deleteContactAsync, 
 } from '../../store/slices/contactSlice';
 
 function ContactList() {
@@ -22,14 +20,6 @@ function ContactList() {
     dispatch(addNewContact());
   }
 
-  const onDeleteContact = (id) => {
-
-    dispatch(deleteContactAsync(id)); 
-  }
-
-  const onEditContact = (contact) => {
-    dispatch(selectContact(contact));
-  }
 
   return (
     <div className='list-container'>
@@ -38,8 +28,6 @@ function ContactList() {
           <ContactItem
             key={contact.id}
             contact={contact}
-            onDelete={onDeleteContact}
-            onEdit={onEditContact}
           />
         ))}
       </div>
