@@ -10,8 +10,7 @@ function ContactItem({ contact }) {
     dispatch(deleteContactAsync(contact.id));
   };
 
-  const onContactEdit = (e) => {
-    e.stopPropagation();
+  const onContactEdit = () => {
     dispatch(selectContact(contact));
   };
 

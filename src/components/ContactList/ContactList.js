@@ -22,12 +22,12 @@ function ContactList() {
     dispatch(addNewContact());
   }
 
-  function onDeleteContact(id) {
+  const onDeleteContact = (id) => {
 
     dispatch(deleteContactAsync(id)); 
   }
 
-  function onEditContact(contact) {
+  const onEditContact = (contact) => {
     dispatch(selectContact(contact));
   }
 
@@ -38,8 +38,8 @@ function ContactList() {
           <ContactItem
             key={contact.id}
             contact={contact}
-            onDelete={() => onDeleteContact(contact.id)}
-            onEdit={() => onEditContact(contact)}
+            onDelete={onDeleteContact}
+            onEdit={onEditContact}
           />
         ))}
       </div>

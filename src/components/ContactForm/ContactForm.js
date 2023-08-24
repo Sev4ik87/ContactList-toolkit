@@ -22,8 +22,9 @@ function ContactForm() {
     setEditContact({ ...editContact, [e.target.name]: e.target.value });
   };
 
-  const onClearField = (fieldName) => {
-    setEditContact({ ...editContact, [fieldName]: '' });
+  const onClearField = (e) => {
+    const sibling = e.target.parentNode.firstChild;
+    setEditContact({...editContact, [sibling.name]: '' });
   };
 
   const onFormSubmit = (e) => {
@@ -54,7 +55,7 @@ function ContactForm() {
             value={editContact.firstName}
             onChange={onInputChange}
           />
-          <span className='clear' onClick={() => onClearField('firstName')}>
+          <span className='clear' onClick={onClearField}>
             X
           </span>
         </div>
@@ -68,7 +69,7 @@ function ContactForm() {
             value={editContact.lastName}
             onChange={onInputChange}
           />
-          <span className='clear' onClick={() => onClearField('lastName')}>
+          <span className='clear' onClick={onClearField}>
             X
           </span>
         </div>
@@ -82,7 +83,7 @@ function ContactForm() {
             value={editContact.email}
             onChange={onInputChange}
           />
-          <span className='clear' onClick={() => onClearField('email')}>
+          <span className='clear' onClick={onClearField}>
             X
           </span>
         </div>
@@ -96,7 +97,7 @@ function ContactForm() {
             value={editContact.phone}
             onChange={onInputChange}
           />
-          <span className='clear' onClick={() => onClearField('phone')}>
+          <span className='clear' onClick={onClearField}>
             X
           </span>
         </div>
